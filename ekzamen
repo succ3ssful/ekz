@@ -1,0 +1,75 @@
+using System;
+
+class ATM
+{
+    private decimal balance;
+
+    public ATM()
+    {
+        balance = 1000; // Начальный баланс
+    }
+
+    public void ShowBalance()
+    {
+        Console.WriteLine($"Ваш баланс: {balance} рублей");
+    }
+
+    public void WithdrawMoney(decimal amount)
+    {
+        if (amount <= 0)
+        {
+            Console.WriteLine("Сумма для снятия должна быть положительной.");
+        }
+        else if (amount > balance)
+        {
+            Console.WriteLine("Недостаточно средств.");
+        }
+        else
+        {
+            balance -= amount;
+            Console.WriteLine($"Вы сняли {amount} рублей. Остаток: {balance} рублей.");
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        ATM atm = new ATM();
+
+        while (true)
+        {
+            Console.WriteLine("\nВыберите действие:");
+            Console.WriteLine("1. Показать баланс");
+            Console.WriteLine("2. Снять деньги");
+            Console.WriteLine("3. Выход");
+
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    atm.ShowBalance();
+                    break;
+                case "2":
+                    Console.Write("Введите сумму для снятия: ");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal amount))
+                    {
+                        atm.WithdrawMoney(amount);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Неверный ввод суммы.");
+                    }
+                    break;
+                case "3":
+                    Console.WriteLine("Выход из программы.");
+                    return;
+                default:
+                    Console.WriteLine("Неверный выбор. Попробуйте снова.");
+                    break;
+            }
+        }
+    }
+}
